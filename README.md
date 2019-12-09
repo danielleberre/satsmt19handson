@@ -247,7 +247,16 @@ numbered 111 to 444. As such, you will have to declare 444
 variables in your OPB file header.
 
 Check that solving the constraints without hints gives you 
-a valid 4x4 sudoku.
+a valid 4x4 sudoku. You can use the [following script](decodesudoku4.py) to interpret and display the solution given by the SAT solver.
+
+```shell
+$ java -jar sat4j-pb.jar sudoku4.opb | ./decodesudoku4.py 
+32 14
+14 32
+
+21 43
+43 21
+```
 
 ### Case 9x9 (usual one)
 
@@ -344,6 +353,7 @@ Do not forget to add those 33 additional constraints in the header of the file.
 Once you have generated your CNF or OPB file, you can
 check if you solve that puzzle by decoding the solution
 returned by the SAT solver [using that script](decodesudoku.py).
+
 
 ## Playing with PB, PBO and MAXSAT
 
