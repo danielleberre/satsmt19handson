@@ -19,7 +19,7 @@ Each variable is represented by a number.
 Each literal is represented by a signed number.
 A clause is represented by a sequence of signed integer terminated by 0.
 
-`$x_1 \lor x_2 \lor \lnot x_3$` is represented in Dimacs by
+$x_1 \lor x_2 \lor \lnot x_3$ is represented in Dimacs by
 `1 2 -3 0`.
 
 It is also mandatory to provide in the header of the file the
@@ -27,7 +27,7 @@ number of variables and the number of clauses.
 
 `p cnf <nbvars> <nbclauses>`
 
-To represent the simple formula `$(x_1 \lor x_2 \lor \lnot x_3) \land (\lnot x_1 \lor x_2) \land (x_2 \lor x_3) \land \lnot x_2$` with 3 variables and 4 clauses, we can use the following Dimacs file:
+To represent the simple formula $(x_1 \lor x_2 \lor \lnot x_3) \land (\lnot x_1 \lor x_2) \land (x_2 \lor x_3) \land \lnot x_2$ with 3 variables and 4 clauses, we can use the following Dimacs file:
 
 ```
 p cnf 3 4
@@ -122,8 +122,8 @@ The threshold of the constraint is a signed integer.
 
 The constraint is terminated by `;`.
 
-So `$x_1 \lor x_2 \lor \lnot x_3$` is represented by the 
-PB constraint `$x_1 + x_2 + \overline{x_3} \geq 1$`.
+So $x_1 \lor x_2 \lor \lnot x_3$ is represented by the 
+PB constraint $x_1 + x_2 + \overline{x_3} \geq 1$.
 In OPB format, it will be represented by
 
 `+1 x_1 +1 x_2 +1 ~x_3 >= 1;`
@@ -134,7 +134,7 @@ in Sat4j format, or by
 
 in the strict evaluation format.
 
-To represent the simple formula `$3*x_1 + 2*x_2 + \overline{x_3} \geq 3 \land x_1 + x_2 + x_3 <= 1$`, Sat4j can read 
+To represent the simple formula $3*x_1 + 2*x_2 + \overline{x_3} \geq 3 \land x_1 + x_2 + x_3 <= 1$, Sat4j can read 
 the following opb file:
 
 ```
