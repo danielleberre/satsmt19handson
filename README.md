@@ -217,7 +217,41 @@ c solver contains 39 constraints
 In the previous exercises, you saw the file format for
 CNF or OPB files.
 
-Solve the following sudoku problem using either clauses or cardinality constraints:
+Sudoku is a simple puzzle with an n^2xn^2 grid where all the 
+cells should contain one of 1 to n^2 mark, and each row, column, and nxn block should contain all the marks.  
+
+So the following constraints have to be expressed:
+
+- each cell contain exactly one value between 1 and n^2
+- each value appears only once in each row
+- each value appears only once in each column
+- each value appears only once in each nxn block
+
+This puzzle can be expressed with Boolean variables $x_{rcv}$
+meaning that in row `r`, column `c`, the value is `v`.
+
+### Case 4x4 (toy one)
+
+Here is an example of filled in 4x4 sudoku:
+```
+2 3 1 4
+1 4 3 2
+4 1 2 3
+3 2 4 1
+```
+
+We need thus 4x4x4 = 64 variables to model this puzzle.
+
+However, it is probably easier to consider using variables
+numbered 111 to 444. As such, you will have to declare 444
+variables in your OPB file header.
+
+Check that solving the constraints without hints gives you 
+a valid 4x4 sudoku.
+
+### Case 9x9 (usual one)
+
+Solve the following sudoku 9x9 problem using either clauses or cardinality constraints:
 
 ![](https://blogs.sas.com/content/sastraining/files/2015/01/Figure-1.png)
 
@@ -229,12 +263,6 @@ Each variable will be numbered 111 to 999 with the following meaning: each numbe
 
 So variable 123 will mean: in row 1, column 2, the value is 3.
 
-So the following constraints have to be expressed:
-
-- each cell contain exactly one value between 1 and 9
-- each value appears only once in each row
-- each value appears only once in each column
-- each value appears only once in each 3x3 block
 
 You will need to add at the end of the file the hints:
 
