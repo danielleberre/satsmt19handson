@@ -211,6 +211,14 @@ c cardinality search time (preprocessing): 82ms
 c found 19 at-most cardinality constraint of degree 1 and size 20
 c solver contains 39 constraints
 ```
+### Sat4j on the fly visualization and control
+
+To visualize some information about the solver internal state
+and be able to manually change the settings of the solver, you can run the following command to launch Sat4j ``remote control'':
+
+```
+java -jar sat4j-sat.jar -remote -r sitting20.cnf 
+```
 
 ## Your turn: sudoku
 
