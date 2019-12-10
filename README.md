@@ -236,10 +236,10 @@ The traces have been rendered as image for your convenience:
 ### Sat4j on the fly visualization and control
 
 To visualize some information about the solver internal state
-and be able to manually change the settings of the solver, you can run the following command to launch Sat4j ``remote control'':
+and be able to manually change the settings of the solver on the fly, you can run the following command to launch Sat4j ``remote control'':
 
-```
-java -jar sat4j-sat.jar -remote -r sitting20.cnf 
+```shell
+$ java -jar sat4j-sat.jar -remote -r sitting20.cnf 
 ```
 
 ## Your turn: sudoku
