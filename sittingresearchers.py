@@ -28,12 +28,12 @@ if (len(sys.argv)!=2):
 else:
     m = int(sys.argv[1])
 
-print ("p cnf %d %d" % (m*m-m,m+(m-1)*m*(m-1)/2))
 print ("c beginMapping")
 for i in range(1,m+1):
     for j in range(1,m):
         print ("c %d=R%dS%d" %(var(i,j,m),i,j))
 print ("c endMapping")
+print ("p cnf %d %d" % (m*m-m,m+(m-1)*m*(m-1)/2))
 for i in range(1,m+1):
     at_least_one(i,m)
 

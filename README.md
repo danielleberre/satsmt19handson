@@ -211,6 +211,28 @@ c cardinality search time (preprocessing): 82ms
 c found 19 at-most cardinality constraint of degree 1 and size 20
 c solver contains 39 constraints
 ```
+### How to produce Sat4j search trace 
+
+Sat4j can provide for small examples the trace of the
+search performed to get the solution.
+
+The trace is provided as a [dot file](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) which can then by rendered
+using [graphviz](http://graphviz.org).
+
+The following commands allow to produce the traces for the
+small m=4 example with the default proof system (Resolution)
+and the cutting planes proof system (Hooker's generalized resolution).
+
+```shell
+$ java -jar sat4j-sat.jar -d sitting4res.dot sitting4.cnf
+$ java -jar sat4j-sat.jar -d sitting4cp.dot -s CuttingPlanes sitting4.opb
+```
+
+The traces have been rendered as image for your convenience:
+
++ [Trace for the resolution proof system](traceres.png)
++ [Trace of the cutting planes proof system](tracecp.png)
+
 ### Sat4j on the fly visualization and control
 
 To visualize some information about the solver internal state
