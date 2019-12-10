@@ -264,10 +264,11 @@ meaning that in row `r`, column `c`, the value is `v`.
 
 Here is an example of filled in 4x4 sudoku:
 ```
-2 3 1 4
-1 4 3 2
-4 1 2 3
-3 2 4 1
+2 3  1 4
+1 4  3 2
+
+4 1  2 3
+3 2  4 1
 ```
 
 We need thus 4x4x4 = 64 variables to model this puzzle.
