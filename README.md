@@ -438,4 +438,118 @@ Which items should you choose for a capacity of 165?
 
 ### MAXSAT
 
-TBA
+We got back to our initial Researchers and Seat problem.
+
+Suppose that there are more participants than the available
+seats. You may still want to assign the available seats
+to some researchers, even if you cannot satisfy everybody.
+
+In that case, it means that we will violate the constraint 
+``Each researcher should have a seat". Obviously, we would
+like to violate that constraint for a minimum number of researchers.
+
+We enter the MAXSAT world!
+
+#### An unbiased solution using partial MAXSAT
+
+We still want to ensure that each seat is assigned to 
+at most one researcher. This is called a **hard** constraint.
+
+Let's consider that all the researchers are equal. Thus
+the constraint asserting that each research should have a 
+seat can be assigned a uniform penalty (say 1).
+Those constraints become **soft**.
+
+The [WCNF format](https://maxsat-evaluations.github.io/2019/rules.html#input) for expressing MAXSAT problem is quite close
+to Dimacs one.
+
+The header mentions the format `wcnf` instead of `cnf`. It must also contain an additional information: the top weight, representing the weight of the hard constraints.
+
+The clauses are prefixed by a weight:
+
++ hard clauses are prefixed by the top weight
++ soft clauses are prefixed by any weight smaller than the top clause
+
+In the example below, the top weight is 10. The first two clauses are hard, and the remaining two clauses are soft, with a weight of 1.
+
+```
+p wcnf 3 4 10
+10 1 2 -3 0
+10 -1 2 0
+1 2 3 0
+1 -2
+```
+
+It is quite simple to modify the script generating a Dimacs
+file to [generate a Partial MAXSAT formula](sittingresearchersmaxsat.py):
+
+- the script now takes too parameters, `m` the number of researchers and `n` the number of seats. By varying `n` you can check how many clauses must be violated to assign the available seats;
+- the preamble now starts with `p wcnf` instead of `p cnf`;
+- the top weight 10 is used to define hard clauses;
+- the at least one constraint is made soft by adding a weight of 1;
+- the at most one constraints are made hard by adding a weight of 10.
+
+A [small script to decode the answer](whoisseated.py) is provided to check the assignment.
+
+```shell
+$ ./sittingresearchersmaxsat.py 10 7 >maxsat10-7.wcnf
+$ java -jar sat4j-maxsat.jar maxsat10-7.wcnf |./whoisseated.py maxsat10-7.wcnf
+R3S6 R5S7 R6S2 R7S5 R8S1 R9S3 R10S4
+```
+
+The solver assigned the seats to the researchers 5 to 10, plus researcher 3.
+
+Note that the head of department, researcher 1, is not seated!
+
+#### A biased solution using weighted partial MAXSAT
+
+If all the constraints are not equally relaxable, it
+is possible to give them different weights. In that case,
+we enter the Weighted Partial MAXSAT world.
+
+Let's consider that the order of the numbers assigned to the
+researchers should be respected, i.e. that R1 should be the first to be seated, then R2, R3 and so on.
+
+We can just assign a different weight to each at least constraint: here $m-i+1$ where i is the number associated to the researcher.
+
+This is exactly what does [this updated script](sittingresearchersweightedmaxsat.py).
+
+#### Relaxing PB constraints with Weighted Boolean Optimization
+
+It is also possible to relax PB constraints: the PB evaluation
+provides a format for that, called Weighted Boolean Optimization.
+
+The header should be extended with additional information:
+
+- `#soft=` the number of soft constraint 
+- `mincost=` the minimal cost of a soft constraint 
+- `maxcost=` the maximal cost of a soft constraint
+- `sumcost=` the sum of the costs of all soft constraints
+
+A new specific line `soft: ` indicates the threshold
+of cumulated cost that makes the formula unsat.
+
+Finally, the constraints can be prefixed by a weight, given between square brackets.
+
+In the following example, the second constraint is soft,
+with a weight of 1.
+
+```
+* variables= 3 *constraints= 2 #soft= 1 mincost= 1 maxcost= 1 sumcost= 1
+soft: 10 ;
++3 x_1 +2 x_2 +1 ~x_3 >= 3;
+[1] +1 x_1 +1 x_2 +1 x_3 <= 1;
+```
+
+The [following script](sittingresearcherswbo.py) generates an unbiased version of the
+researchers and seats problem with relaxable constraints as a WBO problem. 
+
+That problem can be solved by Sat4j.
+
+```
+$ ./sittingresearcherswbo.py 10 6 >sitting10-6.wbo
+$ java -jar sat4j-pb.jar sitting10-6.wbo
+$ java -jar sat4j-pb.jar CuttingPlanes sitting10-6.wbo
+```
+
+One can note that in this case, the optimal solution is found quicker when using the Cutting Planes proof system than when using the default resolution proof system.
