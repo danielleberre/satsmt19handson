@@ -385,6 +385,7 @@ Once you have generated your CNF or OPB file, you can
 check if you solve that puzzle by decoding the solution
 returned by the SAT solver [using that script](decodesudoku.py).
 
+[Generic script to solve both problems](sudoku.py)
 
 ## Playing with PB, PBO and MAXSAT
 
@@ -397,7 +398,11 @@ Some examples of subset sum instances can be found [here](https://people.sc.fsu.
 Is it possible to find a subset of 15,22,14,26,32,9,16,8 
 which sums to 53?
 
+[OPB file](ss1.opb)
+
 Is it possible to find s subset of  267,493,869,961,1000,1153,1246,1598,1766,1922 which sums to 5842?
+
+[OPB file](ss2.opb)
 
 **Note that such problem can be expressed using a single constraint in Sat4j OPB format.**
 
@@ -435,6 +440,8 @@ values  = 92,57,49,68,60,43,67,84,87,72
 ```
 
 Which items should you choose for a capacity of 165?
+
+[OPB file](ks1.opb)
 
 ### MAXSAT
 
